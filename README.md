@@ -1,3 +1,3 @@
 # PropertySmart-Realtor-Dashboard
 
-For the realtor
+Playing around with GCP, Cloud Spanner and Django
