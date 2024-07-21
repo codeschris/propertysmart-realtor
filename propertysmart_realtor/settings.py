@@ -31,7 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django_spanner',
+    #'django_spanner',
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -50,6 +51,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5 MB
 
 ROOT_URLCONF = 'propertysmart_realtor.urls'
 
@@ -76,12 +79,20 @@ WSGI_APPLICATION = 'propertysmart_realtor.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django_spanner',
-        'PROJECT': 'My First Project',
-        'INSTANCE': 'propertysmart-042',
-        'NAME': 'properties',
-    }
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "properties",
+        "USER": "codeschris",
+        "PASSWORD": "gamer42",
+        "HOST": "127.0.0.1",
+        "PORT": "5432",
+    },
+    #'secondary': {
+    #    'ENGINE': 'django_spanner',
+    #    'PROJECT': 'My First Project',
+    #    'INSTANCE': 'propertysmart-042',
+    #    'NAME': 'properties',
+    #}
 }
 
 

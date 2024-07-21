@@ -14,7 +14,6 @@ class User(models.Model):
     phone_number = models.CharField(max_length=50, null=False)
     password = models.CharField(max_length=100, null=False)
     user_type = models.CharField(max_length=10, choices=USER_TYPE_CHOICES, null=False)
-    profile_picture = models.CharField(max_length=255, null=False)
     created_at = models.DateField(auto_now_add=True, null=False)
     
     def __str__(self):
@@ -68,8 +67,8 @@ class Message(models.Model):
 
 class Photo(models.Model):
     photo_id = models.AutoField(primary_key=True)
-    property = models.ForeignKey(Property, on_delete=models.CASCADE, null=False)
-    url = models.TextField(null=False)
+    property = models.ForeignKey(Property, related_name='photos', on_delete=models.CASCADE, null=False)
+    image = models.ImageField(upload_to='property_photos/', null=False)  # Changed from 'url' to 'image'
     created_at = models.DateField(auto_now_add=True, null=False)
     
     def __str__(self):
