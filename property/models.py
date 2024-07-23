@@ -30,21 +30,6 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.name
 
-class Property(models.Model):
-    property_id = models.AutoField(primary_key=True)
-    realtor = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'user_type': 'Realtor'}, null=False)
-    title = models.CharField(max_length=150, null=False)
-    description = models.CharField(max_length=255, null=False)
-    price = models.FloatField(null=False)
-    location = models.CharField(max_length=255, null=False)
-    property_type = models.CharField(max_length=100, null=False)
-    bedrooms = models.IntegerField(null=False)
-    bathrooms = models.IntegerField(null=False)
-    area = models.FloatField(null=False)
-    listed_at = models.DateField(auto_now_add=True, null=False)
-    
-    def __str__(self):
-        return self.title
 
 class Feedback(models.Model):
     feedback_id = models.AutoField(primary_key=True)
@@ -65,14 +50,33 @@ class Message(models.Model):
     def __str__(self):
         return f'Message from {self.sender.name} to {self.receiver.name}'
 
-class Photo(models.Model):
-    photo_id = models.AutoField(primary_key=True)
-    property = models.ForeignKey(Property, related_name='photos', on_delete=models.CASCADE, null=False)
-    image = models.ImageField(upload_to='property_photos/', null=False)  # Changed from 'url' to 'image'
-    created_at = models.DateField(auto_now_add=True, null=False)
-    
+class Property(models.Model):
+    property_id = models.AutoField(primary_key=True)
+    realtor = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'user_type': 'Realtor'}, null=False)
+    title = models.CharField(max_length=150, null=False)
+    description = models.CharField(max_length=255, null=False)
+    price = models.FloatField(null=False)
+    location = models.CharField(max_length=255, null=False)
+    property_type = models.CharField(max_length=100, null=False)
+    bedrooms = models.IntegerField(null=False)
+    bathrooms = models.IntegerField(null=False)
+    area = models.FloatField(null=False)
+    listed_at = models.DateField(auto_now_add=True, null=False)
+    primary_photo = models.ImageField(upload_to='property_photos/', null=True, blank=True)  # Updated field
+
     def __str__(self):
-        return f'Photo of {self.property.title}'
+        return self.title
+
+
+#class Photo(models.Model):
+#    photo_id = models.AutoField(primary_key=True)
+#    property = models.ForeignKey(Property, related_name='photos', on_delete=models.CASCADE, null=False)
+#    image = models.ImageField(upload_to='property_photos/', null=False)
+#    created_at = models.DateField(auto_now_add=True, null=False)
+#
+#    def __str__(self):
+#        return f'Photo of {self.property.title}'
+
 
 class SearchFilter(models.Model):
     filter_id = models.AutoField(primary_key=True)

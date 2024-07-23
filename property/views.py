@@ -1,4 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from .models import Property
 
 def home(request):
-    return render(request, 'property/index.html')
+    properties = Property.objects.all()
+    return render(request, 'property/index.html', {'properties': properties})
+
+def single_listing(request, property_id):
+    property = get_object_or_404(Property, property_id=property_id)
+    return render(request, 'property/property-single.html', {'property': property})
