@@ -23,6 +23,6 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('property-smart/', include('property.urls')),
-    path('', TemplateView.as_view(template_name='property/index.html'))
+    path('', include('property.urls')),
+    #path('', TemplateView.as_view(template_name='property/index.html'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
