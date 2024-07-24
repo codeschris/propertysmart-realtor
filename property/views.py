@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import Property, Profile
 from .forms import LoginForm, UserRegistrationForm
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     properties = Property.objects.all()
@@ -55,3 +56,25 @@ def login_view(request):
         form = LoginForm()
     
     return render(request, 'property/auth/login.html', {'form': form})
+
+@login_required
+def buyer_profile_view(request):
+    profile = Profile.objects.get(user=request.user)
+    return render(request, 'property/profile/buyer_profile.html', {'profile': profile})
+
+@login_required
+def realtor_profile_view(request):
+    profile = Profile.objects.get(user=request.user)
+    return render(request, 'property/profile/realtor_profile.html', {'profile': profile})
+
+@login_required
+def post_property_view(request):
+    # Logic for posting new property
+    return render(request, 'property/post_property.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect('logout_page')
+
+def logout_page(request):
+    return render(request, 'property/auth/logout.html')

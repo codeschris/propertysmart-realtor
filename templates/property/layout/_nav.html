@@ -13,35 +13,30 @@
         <div class="site-navigation">
           <a href="/" class="logo m-0 float-start">PropertySmart</a>
 
-          <ul
-            class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end"
-          >
+          <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
             <li class="active"><a href="/">Home</a></li>
             <li><a href="{% url 'properties' %}">Properties</a></li>
-            <li><a href="{% url 'login' %}">Login</a></li>
-            <li class="has-children">
-              <a href="{% url 'register' %}">Sign Up</a>
-              <ul class="dropdown">
-                <li><a href="{% url 'register' %}">Buyer</a></li>
-                <li><a href="{% url 'register' %}">Realtor</a></li>
-                <!--<li class="has-children">
-                  <a href="#">Dropdown</a>
+            {% if user.is_authenticated %}
+                {% if user.user_type == 'Realtor' %}
+                    <li><a href="{% url 'realtor_profile' %}">Profile</a></li>
+                    <li><a href="{% url 'post_property' %}">Post Property</a></li>
+                {% elif user.user_type == 'Buyer' %}
+                    <li><a href="{% url 'buyer_profile' %}">Profile</a></li>
+                {% endif %}
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li class="has-children">
+                  <a href="{% url 'register' %}">Sign Up</a>
                   <ul class="dropdown">
-                    <li><a href="#">Sub Menu One</a></li>
-                    <li><a href="#">Sub Menu Two</a></li>
-                    <li><a href="#">Sub Menu Three</a></li>
+                    <li><a href="{% url 'register' %}?type=buyer">Buyer</a></li>
+                    <li><a href="{% url 'register' %}?type=realtor">Realtor</a></li>
                   </ul>
-                </li>-->
-              </ul>
-            </li>
+                </li>
+            {% endif %}
           </ul>
 
-          <a
-            href="#"
-            class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none"
-            data-toggle="collapse"
-            data-target="#main-navbar"
-          >
+          <a href="#" class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none" data-toggle="collapse" data-target="#main-navbar">
             <span></span>
           </a>
         </div>
