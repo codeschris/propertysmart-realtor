@@ -18,11 +18,12 @@
           >
             <li class="active"><a href="/">Home</a></li>
             <li><a href="{% url 'properties' %}">Properties</a></li>
+            <li><a href="{% url 'login' %}">Login</a></li>
             <li class="has-children">
-              <a href="properties.html">Log in/Sign Up</a>
+              <a href="{% url 'register' %}">Sign Up</a>
               <ul class="dropdown">
-                <li><a href="#">Buyer</a></li>
-                <li><a href="#">Realtor</a></li>
+                <li><a href="{% url 'register' %}">Buyer</a></li>
+                <li><a href="{% url 'register' %}">Realtor</a></li>
                 <!--<li class="has-children">
                   <a href="#">Dropdown</a>
                   <ul class="dropdown">

@@ -1,6 +1,28 @@
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
-class User(models.Model):
+class CustomUserManager(BaseUserManager):
+    def create_user(self, email_address, name, phone_number, password=None, **extra_fields):
+        if not email_address:
+            raise ValueError('The Email field must be set')
+        email_address = self.normalize_email(email_address)
+        user = self.model(email_address=email_address, name=name, phone_number=phone_number, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email_address, name, phone_number, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+
+        return self.create_user(email_address, name, phone_number, password, **extra_fields)
+
+class User(AbstractBaseUser, PermissionsMixin):
     BUYER = 'Buyer'
     REALTOR = 'Realtor'
     USER_TYPE_CHOICES = [
@@ -15,7 +37,14 @@ class User(models.Model):
     password = models.CharField(max_length=100, null=False)
     user_type = models.CharField(max_length=10, choices=USER_TYPE_CHOICES, null=False)
     created_at = models.DateField(auto_now_add=True, null=False)
-    
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+
+    USERNAME_FIELD = 'email_address'
+    REQUIRED_FIELDS = ['name', 'phone_number', 'user_type']
+
+    objects = CustomUserManager()
+
     def __str__(self):
         return self.name
 

@@ -1,0 +1,27 @@
+{% extends 'property/layout/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Login | PropertySmart{% endblock %}
+
+{% block content %}
+<section class="vh-100" style="background-color: #f8f9fa;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                    <div class="card-body p-5">
+
+                        <h3 class="mb-5">Sign in</h3>
+
+                        <form method="post">
+                            {% csrf_token %}
+                            {% crispy form %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

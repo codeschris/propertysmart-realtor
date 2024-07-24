@@ -35,6 +35,8 @@ ALLOWED_HOSTS = ['192.168.0.18','localhost','127.0.0.1']
 INSTALLED_APPS = [
     #'django_spanner',
     'jazzmin',
+    'crispy_forms',
+    'crispy_bootstrap4',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -59,6 +61,8 @@ MIDDLEWARE = [
 ]
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5 MB
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+AUTH_USER_MODEL = 'property.User'
 
 CORS_ORIGIN_WHITELIST = [
     'http://192.168.0.18:19006',

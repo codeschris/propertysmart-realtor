@@ -1,35 +1,38 @@
 from django import forms
-from .models import Property, Photo
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
+from .models import User, Profile
 
-class MultipleFileInput(forms.ClearableFileInput):
-    allow_multiple_selected = True
+class UserRegistrationForm(UserCreationForm):
+    email_address = forms.EmailField(max_length=255, required=True, help_text='Required. Provide a valid email address.')
+    phone_number = forms.CharField(max_length=50, required=True)
+    user_type = forms.ChoiceField(choices=User.USER_TYPE_CHOICES, required=True)
 
-class MultipleFileField(forms.FileField):
+    bio = forms.CharField(widget=forms.Textarea, required=True)
+    address = forms.CharField(max_length=255, required=True)
+    preferences = forms.CharField(widget=forms.Textarea, required=True)
+
+    class Meta:
+        model = User
+        fields = ['name', 'email_address', 'phone_number', 'password1', 'password2', 'user_type']
+    
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault("widget", MultipleFileInput())
         super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('submit', 'Register', css_class='btn btn-primary btn-block'))
 
-    def clean(self, data, initial=None):
-        # Handle multiple file uploads
-        if isinstance(data, list):
-            result = [super().clean(file) for file in data if file]
-        else:
-            result = super().clean(data)
-        return result
+class LoginForm(AuthenticationForm):
+    email_address = forms.EmailField(max_length=255, required=True, help_text='Required. Enter a valid email address.')
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
-class MultiplePhotoForm(forms.Form):
-    property = forms.ModelChoiceField(queryset=Property.objects.all())
-    images = MultipleFileField(label='Select photos', required=False)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('submit', 'Login', css_class='btn btn-primary'))
 
-    def save(self, commit=True):
-        property = self.cleaned_data['property']
-        images = self.files.getlist('images')  # Handle multiple files
-
-        photo_instances = []
-        for image in images:
-            photo_instance = Photo(property=property, image=image)
-            if commit:
-                photo_instance.save()
-            photo_instances.append(photo_instance)
-
-        return photo_instances
+    def clean(self):
+        # Optional: Add custom validation if needed
+        return super().clean()
