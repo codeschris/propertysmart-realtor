@@ -1,5 +1,8 @@
 from django.urls import path
-from .views import home, single_listing, properties_list, login_view, register, buyer_profile_view, realtor_profile_view, post_property_view, logout_page, logout_view
+from .views import (home, single_listing, properties_list, 
+                    login_view, register, buyer_profile_view, 
+                    realtor_profile_view, post_property_view, logout_page, 
+                    logout_view)
 from django.conf.urls.static import static
 from django.conf import settings
 
