@@ -9,6 +9,7 @@ django-cors-headers==4.4.0
 django-crispy-forms==2.3
 django-google-spanner==4.0.1
 django-jazzmin==3.0.0
+django-pwa==2.0.0
 djangorestframework==3.15.2
 djangorestframework-simplejwt==5.3.1
 google-api-core==2.19.1

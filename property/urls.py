@@ -5,6 +5,8 @@ from .views import (home, single_listing, properties_list,
                     logout_view)
 from django.conf.urls.static import static
 from django.conf import settings
+from pwa import views as pwa_views
+from django.views.decorators.cache import cache_page
 
 urlpatterns = [
     path('', home, name="homepage"),
@@ -17,4 +19,5 @@ urlpatterns = [
     path('realtor/post-property/', post_property_view, name='post_property'),
     path('auth/logout/', logout_view, name='logout'),
     path('auth/logout_page/', logout_page, name='logout_page'),
+    path('offline/', cache_page(60 * 15)(pwa_views.offline), name='offline'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

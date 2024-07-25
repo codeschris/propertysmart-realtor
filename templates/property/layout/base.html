@@ -1,11 +1,13 @@
-{% load static %}
+{% load static %} {% load pwa %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    {% progressive_web_app_meta %}
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Untree.co" />
     <link rel="shortcut icon" href="{% static 'favicon.png' %}" />
+    <link rel="manifest" href="{% static 'manifest.json' %}">
 
     <meta name="description" content="" />
     <meta name="keywords" content="Property, smart" />
@@ -43,12 +45,22 @@
         <span class="visually-hidden">Loading...</span>
       </div>
     </div>
-
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/tiny-slider.js' %}"></script>
     <script src="{% static 'js/aos.js' %}"></script>
     <script src="{% static 'js/navbar.js' %}"></script>
     <script src="{% static 'js/counter.js' %}"></script>
     <script src="{% static 'js/custom.js' %}"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('{% static "js/serviceworker.js" %}')
+                .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                })
+                .catch(function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+        }
+    </script>
   </body>
 </html>
