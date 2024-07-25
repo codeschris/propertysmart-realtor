@@ -16,6 +16,7 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'static/js', 'serviceworker.js')
 
 
 # Quick-start development settings - unsuitable for production
@@ -27,7 +28,7 @@ SECRET_KEY = 'django-insecure-65bf%^(e-h!vbnbn(6e7qh07i!8(#a3w0#)tf-$084!zmes)xy
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.0.18','localhost','127.0.0.1']
+ALLOWED_HOSTS = ['192.168.0.18','localhost','127.0.0.1','8fed-154-70-42-189.ngrok-free.app']
 
 
 # Application definition
@@ -184,40 +185,38 @@ PWA_APP_START_URL = '/'
 PWA_APP_STATUS_BAR_COLOR = 'default'
 PWA_APP_ICONS = [
     {
-        'src': '/static/favicon.png',
+        'src': '/static/favicon-160x160.png',
         'sizes': '160x160'
     }
 ]
 PWA_APP_ICONS_APPLE = [
     {
-        'src': '/static/favicon.png',
+        'src': '/static/favicon-160x160.png',
         'sizes': '160x160'
     }
 ]
 PWA_APP_SPLASH_SCREEN = [
     {
-        'src': '/static/images/icons/splash-640x1136.png',
+        'src': '/static/favicon.png',
         'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
     }
 ]
 PWA_APP_DIR = 'ltr'
 PWA_APP_LANG = 'en-US'
-PWA_APP_SHORTCUTS = [
-    {
-        'name': 'Shortcut',
-        'url': '/target',
-        'description': 'Shortcut to a page in my application'
-    }
-]
+#PWA_APP_SHORTCUTS = [
+#    {
+#        'name': 'Shortcut',
+#        'url': '/target',
+#        'description': 'Shortcut to a page in my application'
+#    }
+#]
 PWA_APP_SCREENSHOTS = [
     {
-      'src': '/static/images/icons/splash-750x1334.png',
+      'src': '/static/images/screenshot.png',
       'sizes': '750x1334',
       "type": "image/png"
     }
 ]
-
-PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'static/js', 'serviceworker.js')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

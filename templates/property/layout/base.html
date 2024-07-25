@@ -6,8 +6,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Untree.co" />
-    <link rel="shortcut icon" href="{% static 'favicon.png' %}" />
+    <link rel="shortcut icon" href="{% static 'favicon-160x160.png' %}" />
     <link rel="manifest" href="{% static 'manifest.json' %}">
+    <meta name="theme-color" content="#0A0302">
 
     <meta name="description" content="" />
     <meta name="keywords" content="Property, smart" />
@@ -53,13 +54,14 @@
     <script src="{% static 'js/custom.js' %}"></script>
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('{% static "js/serviceworker.js" %}')
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register("{% static 'js/serviceworker.js' %}")
                 .then(function(registration) {
                     console.log('Service Worker registered with scope:', registration.scope);
-                })
-                .catch(function(error) {
+                }).catch(function(error) {
                     console.log('Service Worker registration failed:', error);
                 });
+            });
         }
     </script>
   </body>
