@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-65bf%^(e-h!vbnbn(6e7qh07i!8(#a3w0#)tf-$084!zmes)xy
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.0.18','localhost','127.0.0.1','8fed-154-70-42-189.ngrok-free.app']
+ALLOWED_HOSTS = ['devmm.pythonanywhere.com','192.168.0.18','localhost','127.0.0.1','8fed-154-70-42-189.ngrok-free.app']
 
 
 # Application definition
@@ -113,14 +113,18 @@ WSGI_APPLICATION = 'propertysmart_realtor.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "properties",
-        "USER": "codeschris",
-        "PASSWORD": "gamer42",
-        "HOST": "127.0.0.1",
-        "PORT": "5432",
-    },
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'properties.db'),
+    }
+    #"default": {
+        #"ENGINE": "django.db.backends.postgresql",
+        #"NAME": "properties",
+        #"USER": "codeschris",
+        #"PASSWORD": "gamer42",
+       # "HOST": "127.0.0.1",
+      #  "PORT": "5432",
+    #},
     #'secondary': {
     #    'ENGINE': 'django_spanner',
     #    'PROJECT': 'My First Project',
