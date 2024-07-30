@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import Property, Profile
-from .forms import LoginForm, UserRegistrationForm
+from .forms import LoginForm, UserRegistrationForm, PropertyForm
 from django.contrib.auth.decorators import login_required
 
 def home(request):
@@ -69,8 +69,16 @@ def realtor_profile_view(request):
 
 @login_required
 def post_property_view(request):
-    # Logic for posting new property
-    return render(request, 'property/post_property.html')
+    if request.method == 'POST':
+        form = PropertyForm(request.POST, request.FILES)
+        if form.is_valid():
+            property = form.save(commit=False)
+            property.realtor = request.user
+            property.save()
+            return redirect('homepage')
+    else:
+        form = PropertyForm()
+    return render(request, 'property/post_property.html', {'form': form})
 
 def logout_view(request):
     logout(request)

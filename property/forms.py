@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
-from .models import User, Profile
+from .models import User, Property
 
 class UserRegistrationForm(UserCreationForm):
     email_address = forms.EmailField(max_length=255, required=True, help_text='Required. Provide a valid email address.')
@@ -36,3 +36,18 @@ class LoginForm(AuthenticationForm):
     def clean(self):
         # Optional: Add custom validation if needed
         return super().clean()
+    
+class PropertyForm(forms.ModelForm):
+    class Meta:
+        model = Property
+        fields = [
+            'title',
+            'description',
+            'price',
+            'location',
+            'property_type',
+            'bedrooms',
+            'bathrooms',
+            'area',
+            'primary_photo'
+        ]

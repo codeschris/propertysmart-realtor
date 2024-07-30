@@ -9885,6 +9885,11 @@ textarea {
 .property-item.mb-30 {
   margin-bottom: 30px; }
 
+.spacing-custom{
+  margin-top: 40px;
+  padding-top: 40px;
+}
+
 .property-item .img {
   position: relative;
   z-index: 1; }

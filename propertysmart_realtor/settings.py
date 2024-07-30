@@ -66,9 +66,6 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5 MB
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 AUTH_USER_MODEL = 'property.User'
 
-CORS_ORIGIN_WHITELIST = [
-    'http://192.168.0.18:19006',
-]
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -118,12 +115,12 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'properties.db'),
     }
     #"default": {
-        #"ENGINE": "django.db.backends.postgresql",
-        #"NAME": "properties",
-        #"USER": "codeschris",
-        #"PASSWORD": "gamer42",
-       # "HOST": "127.0.0.1",
-      #  "PORT": "5432",
+    #    "ENGINE": "django.db.backends.postgresql",
+    #    "NAME": "properties",
+    #    "USER": "codeschris",
+    #    "PASSWORD": "gamer42",
+    #    "HOST": "127.0.0.1",
+    #    "PORT": "5432",
     #},
     #'secondary': {
     #    'ENGINE': 'django_spanner',

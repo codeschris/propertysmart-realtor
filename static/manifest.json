@@ -1,6 +1,6 @@
 {
-  "name": "Property Smart Application",
-  "short_name": "Property Smart",
+  "name": "Property Smart",
+  "short_name": "PropertySmart",
   "description": "An app to connect buyers with realtors directly",
   "start_url": "/",
   "display": "standalone",
