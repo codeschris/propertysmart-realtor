@@ -53,6 +53,41 @@
     <script src="{% static 'js/counter.js' %}"></script>
     <script src="{% static 'js/custom.js' %}"></script>
     <script>
+      document.addEventListener("DOMContentLoaded", function() {
+          const slider = document.querySelector(".property-slider");
+          const slides = document.querySelectorAll(".property-item");
+          const prevButton = document.querySelector(".prev");
+          const nextButton = document.querySelector(".next");
+      
+          let currentIndex = 0;
+      
+          function updateSlider() {
+              const width = slides[0].clientWidth;
+              slider.style.transform = `translateX(-${currentIndex * width}px)`;
+          }
+      
+          prevButton.addEventListener("click", () => {
+              if (currentIndex > 0) {
+                  currentIndex--;
+              } else {
+                  currentIndex = slides.length - 1;
+              }
+              updateSlider();
+          });
+      
+          nextButton.addEventListener("click", () => {
+              if (currentIndex < slides.length - 1) {
+                  currentIndex++;
+              } else {
+                  currentIndex = 0;
+              }
+              updateSlider();
+          });
+      
+          window.addEventListener("resize", updateSlider);
+      });
+    </script>      
+    <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register("{% static 'js/serviceworker.js' %}")

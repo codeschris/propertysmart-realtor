@@ -9889,6 +9889,38 @@ textarea {
   margin-top: 40px;
   padding-top: 40px;
 }
+.property-slider-wrap {
+    position: relative;
+    overflow: hidden;
+}
+
+.property-slider {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.property-item {
+    min-width: 100%;
+    box-sizing: border-box;
+}
+
+.controls {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.controls span {
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
 
 .property-item .img {
   position: relative;
