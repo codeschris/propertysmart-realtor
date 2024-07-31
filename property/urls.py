@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (home, single_listing, properties_list, 
                     login_view, register, buyer_profile_view, 
                     realtor_profile_view, post_property_view, logout_page, 
-                    logout_view)
+                    logout_view, property_search)
 from django.conf.urls.static import static
 from django.conf import settings
 from pwa import views as pwa_views
@@ -19,5 +19,6 @@ urlpatterns = [
     path('auth/logout/', logout_view, name='logout'),
     path('auth/logout_page/', logout_page, name='logout_page'),
     path('post_property/', post_property_view, name='post_property'),
+    path('search/', property_search, name='property_search'),
     path('offline/', cache_page(60 * 15)(pwa_views.offline), name='offline'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

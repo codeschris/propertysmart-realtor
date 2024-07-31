@@ -52,15 +52,11 @@
                 </p>
 
                 <div class="d-block agent-box p-5">
-                    <div class="img mb-4">
-                        <img src="{% static 'images/person_2-min.jpg' %}" alt="Agent Image" class="img-fluid" />
-                    </div>
                     <div class="text">
                         <h3 class="mb-0">{{ property.realtor.name }}</h3>
                         <div class="meta mb-3">Real Estate</div>
                         <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Ratione laborum quo quos omnis sed magnam id ducimus saepe
+                            {{ property.realtor.profile.bio }}
                         </p>
                         <ul class="list-unstyled social dark-hover d-flex">
                             <li class="me-1">

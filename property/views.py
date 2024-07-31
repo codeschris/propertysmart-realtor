@@ -4,6 +4,7 @@ from django.contrib import messages
 from .models import Property, Profile
 from .forms import LoginForm, UserRegistrationForm, PropertyForm
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 def home(request):
     properties = Property.objects.all()
@@ -79,6 +80,16 @@ def post_property_view(request):
     else:
         form = PropertyForm()
     return render(request, 'property/post_property.html', {'form': form})
+
+def property_search(request):
+    query = request.GET.get('q')
+    if query:
+        properties = Property.objects.filter(
+            Q(location__icontains=query) | Q(title__icontains=query)
+        )
+    else:
+        properties = Property.objects.all()
+    return render(request, 'property/properties.html', {'properties': properties})
 
 def logout_view(request):
     logout(request)

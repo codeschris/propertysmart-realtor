@@ -91,7 +91,7 @@ class Property(models.Model):
     bathrooms = models.IntegerField(null=False)
     area = models.FloatField(null=False)
     listed_at = models.DateField(auto_now_add=True, null=False)
-    primary_photo = models.ImageField(upload_to='property_photos/', null=True, blank=True)  # Updated field
+    primary_photo = models.ImageField(upload_to='property_photos/', null=True, blank=True)
 
     def __str__(self):
         return self.title
