@@ -130,7 +130,7 @@ def chatroom(request, property_id):
     else:
         form = MessageForm()
 
-    messages = chatroom.message_set.all().order_by('sent_at')
+    messages = chatroom.messages.all().order_by('sent_at')
 
     context = {
         'property': property,

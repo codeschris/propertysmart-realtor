@@ -48,6 +48,9 @@
                         <p>{{ property.realtor.profile.bio }}</p>
                     </div>
                 </div>
+                <div class="d-grid gap-2 mt-3">
+                    <a href="{% url 'chatroom' property_id=property.id %}" class="btn btn-primary">Chat with Realtor</a>
+                </div>
             </div>
         </div>
 

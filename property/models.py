@@ -107,6 +107,7 @@ class ChatRoom(models.Model):
 
 class Message(models.Model):
     message_id = models.AutoField(primary_key=True)
+    chatroom = models.ForeignKey(ChatRoom, related_name='messages', on_delete=models.CASCADE)
     sender = models.ForeignKey(User, related_name='sent_messages', on_delete=models.CASCADE)
     receiver = models.ForeignKey(User, related_name='received_messages', on_delete=models.CASCADE)
     content = models.TextField()
