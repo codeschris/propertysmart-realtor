@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .models import Property, Profile
-from .forms import LoginForm, UserRegistrationForm, PropertyForm
+from .models import Property, Profile, Feedback, ChatRoom
+from .forms import LoginForm, UserRegistrationForm, PropertyForm, FeedbackForm, MessageForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
@@ -11,8 +11,26 @@ def home(request):
     return render(request, 'property/index.html', {'properties': properties})
 
 def single_listing(request, property_id):
-    property = get_object_or_404(Property, property_id=property_id)
-    return render(request, 'property/property-single.html', {'property': property})
+    property = get_object_or_404(Property, pk=property_id)
+    feedbacks = Feedback.objects.filter(property=property).order_by('-created_at')
+
+    if request.method == 'POST':
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            feedback = form.save(commit=False)
+            feedback.user = request.user
+            feedback.property = property
+            feedback.save()
+            return redirect('single_listing', property_id=property_id)
+    else:
+        form = FeedbackForm()
+
+    context = {
+        'property': property,
+        'feedbacks': feedbacks,
+        'form': form
+    }
+    return render(request, 'property/single_listing.html', context)
 
 def properties_list(request):
     properties = Property.objects.all()
@@ -90,6 +108,37 @@ def property_search(request):
     else:
         properties = Property.objects.all()
     return render(request, 'property/properties.html', {'properties': properties})
+
+@login_required
+def chatroom(request, property_id):
+    property = get_object_or_404(Property, pk=property_id)
+    chatroom, created = ChatRoom.objects.get_or_create(
+        property=property,
+        realtor=property.realtor,
+        buyer=request.user
+    )
+
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.sender = request.user
+            message.receiver = chatroom.realtor if request.user == chatroom.buyer else chatroom.buyer
+            message.chatroom = chatroom
+            message.save()
+            return redirect('chatroom', property_id=property_id)
+    else:
+        form = MessageForm()
+
+    messages = chatroom.message_set.all().order_by('sent_at')
+
+    context = {
+        'property': property,
+        'chatroom': chatroom,
+        'messages': messages,
+        'form': form
+    }
+    return render(request, 'property/chatroom.html', context)
 
 def logout_view(request):
     logout(request)

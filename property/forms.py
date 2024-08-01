@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
-from .models import User, Property
+from .models import User, Property, Feedback, Message
 
 class UserRegistrationForm(UserCreationForm):
     email_address = forms.EmailField(max_length=255, required=True, help_text='Required. Provide a valid email address.')
@@ -51,3 +51,13 @@ class PropertyForm(forms.ModelForm):
             'area',
             'primary_photo'
         ]
+
+class FeedbackForm(forms.ModelForm):
+    class Meta:
+        model = Feedback
+        fields = ['content']
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ['content']

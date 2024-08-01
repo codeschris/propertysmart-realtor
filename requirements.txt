@@ -1,6 +1,8 @@
 asgiref==3.8.1
 cachetools==5.4.0
 certifi==2024.7.4
+channels==4.1.0
+channels-redis==4.2.0
 charset-normalizer==3.3.2
 crispy-bootstrap4==2024.1
 Django==4.2.10
@@ -22,6 +24,7 @@ grpc-interceptor==0.15.4
 grpcio==1.65.1
 grpcio-status==1.62.2
 idna==3.7
+msgpack==1.0.8
 pillow==10.4.0
 proto-plus==1.24.0
 protobuf==4.25.3
@@ -29,6 +32,7 @@ psycopg2-binary==2.9.9
 pyasn1==0.6.0
 pyasn1_modules==0.4.0
 PyJWT==2.8.0
+redis==5.0.8
 requests==2.32.3
 rsa==4.9
 setuptools==71.0.4

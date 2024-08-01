@@ -1,0 +1,23 @@
+{% extends 'property/layout/base.html' %}
+{% load static %}
+
+{% block title %}Chat with {{ chatroom.realtor.username }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Chat with {{ chatroom.realtor.username }}</h1>
+    <div class="chat-messages">
+        {% for message in messages %}
+        <div class="chat-message">
+            <strong>{{ message.sender.username }}</strong>: {{ message.content }}
+            <span class="timestamp">{{ message.sent_at }}</span>
+        </div>
+        {% endfor %}
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Send</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.utils import timezone
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email_address, name, phone_number, password=None, **extra_fields):
@@ -59,26 +60,6 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.name
 
-
-class Feedback(models.Model):
-    feedback_id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
-    content = models.TextField(null=False)
-    created_at = models.DateField(auto_now_add=True, null=False)
-    
-    def __str__(self):
-        return f'Feedback by {self.user.name}'
-
-class Message(models.Model):
-    message_id = models.AutoField(primary_key=True)
-    sender = models.ForeignKey(User, related_name='sent_messages', on_delete=models.CASCADE, null=False)
-    receiver = models.ForeignKey(User, related_name='received_messages', on_delete=models.CASCADE, null=False)
-    content = models.TextField(null=False)
-    sent_at = models.DateField(auto_now_add=True, null=False)
-    
-    def __str__(self):
-        return f'Message from {self.sender.name} to {self.receiver.name}'
-
 class Property(models.Model):
     property_id = models.AutoField(primary_key=True)
     realtor = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'user_type': 'Realtor'}, null=False)
@@ -96,6 +77,15 @@ class Property(models.Model):
     def __str__(self):
         return self.title
 
+class Feedback(models.Model):
+    feedback_id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
+    property = models.ForeignKey(Property, on_delete=models.CASCADE, null=False)
+    content = models.TextField(null=False)
+    created_at = models.DateField(auto_now_add=True, null=False)
+
+    def __str__(self):
+        return f'Feedback by {self.user.username} on {self.property.title}'
 
 #class Photo(models.Model):
 #    photo_id = models.AutoField(primary_key=True)
@@ -106,6 +96,24 @@ class Property(models.Model):
 #    def __str__(self):
 #        return f'Photo of {self.property.title}'
 
+class ChatRoom(models.Model):
+    property = models.ForeignKey(Property, on_delete=models.CASCADE)
+    realtor = models.ForeignKey(User, related_name='realtor_chats', on_delete=models.CASCADE)
+    buyer = models.ForeignKey(User, related_name='buyer_chats', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"ChatRoom for {self.property.title}"
+
+class Message(models.Model):
+    message_id = models.AutoField(primary_key=True)
+    sender = models.ForeignKey(User, related_name='sent_messages', on_delete=models.CASCADE)
+    receiver = models.ForeignKey(User, related_name='received_messages', on_delete=models.CASCADE)
+    content = models.TextField()
+    sent_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f'Message from {self.sender.username} to {self.receiver.username}'
 
 class SearchFilter(models.Model):
     filter_id = models.AutoField(primary_key=True)
