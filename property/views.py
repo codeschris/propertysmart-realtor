@@ -30,7 +30,7 @@ def single_listing(request, property_id):
         'feedbacks': feedbacks,
         'form': form
     }
-    return render(request, 'property/single_listing.html', context)
+    return render(request, 'property/property-single.html', context)
 
 def properties_list(request):
     properties = Property.objects.all()
