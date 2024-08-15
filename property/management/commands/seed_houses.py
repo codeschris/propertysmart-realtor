@@ -24,11 +24,13 @@ class Command(BaseCommand):
             'bathrooms': [1, 2, 3, 4, 5],
             'areas': [1000, 1500, 2000, 2500, 3000],
             'images': [
-                'house1.jpg',
-                'house2.jpg',
-                'house3.jpg',
-                'house4.jpg',
-                'house5.jpg'
+                'house_1.jpeg',
+                'house_2.jpeg',
+                'house_3.jpeg',
+                'house_4.jpeg',
+                'house_5.jpeg',
+                'house_6.jpeg',
+                'house_7.jpeg'
             ]
         }
 
@@ -41,9 +43,17 @@ class Command(BaseCommand):
             location = random.choice(predefined_details['locations'])
             property_type = random.choice(predefined_details['property_types'])
 
+            # Create a more descriptive text for the property
+            description = (
+                f"Discover your dream home in {location}! This {property_type.lower()} offers unparalleled comfort "
+                "with spacious rooms, modern amenities, and a serene environment. Experience the ultimate in luxury living "
+                "with features designed to meet your every need. This is the home where comfort meets elegance—truly a dreamhouse "
+                "you’ve always wanted."
+            )
+
             property = Property(
                 title=f"Houses for rent/sale in {location}",
-                description=fake.text(max_nb_chars=200),
+                description=description,
                 price=random.choice(predefined_details['prices']),
                 location=location,
                 property_type=property_type,
@@ -55,7 +65,7 @@ class Command(BaseCommand):
 
             # Assign a random image from the local directory
             image_name = random.choice(predefined_details['images'])
-            image_path = os.path.join('propertysmart_realtor', 'property_images', image_name)
+            image_path = os.path.join('property_images', image_name)
             property.primary_photo.save(image_name, File(open(image_path, 'rb')))
             property.save()
 
