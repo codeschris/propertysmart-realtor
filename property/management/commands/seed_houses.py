@@ -55,7 +55,7 @@ class Command(BaseCommand):
 
             # Assign a random image from the local directory
             image_name = random.choice(predefined_details['images'])
-            image_path = os.path.join('propertysmart_realtor', 'property_photos', image_name)
+            image_path = os.path.join('propertysmart_realtor', 'property_images', image_name)
             property.primary_photo.save(image_name, File(open(image_path, 'rb')))
             property.save()
 
